@@ -1,0 +1,84 @@
+<!DOCTYPE html><html lang="en">
+<head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>For Arishfa</title><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&family=Pacifico&display=swap" rel="stylesheet"><style>
+
+body{
+margin:0;
+font-family:'Poppins',sans-serif;
+background:linear-gradient(135deg,#ffe4ec,#ffd6e0);
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+text-align:center;
+}
+
+.card{
+background:white;
+padding:40px;
+border-radius:20px;
+max-width:420px;
+box-shadow:0 10px 25px rgba(0,0,0,0.1);
+}
+
+h1{
+font-family:'Pacifico',cursive;
+color:#ff4f7b;
+font-size:2.2rem;
+margin-bottom:10px;
+}
+
+p{
+color:#444;
+line-height:1.6;
+margin-top:15px;
+}
+
+.heart{
+font-size:40px;
+animation:beat 1.2s infinite;
+}
+
+@keyframes beat{
+0%{transform:scale(1)}
+50%{transform:scale(1.2)}
+100%{transform:scale(1)}
+}
+
+button{
+margin-top:25px;
+padding:12px 22px;
+border:none;
+border-radius:25px;
+background:#ff4f7b;
+color:white;
+font-size:15px;
+cursor:pointer;
+}
+
+.hidden{
+display:none;
+margin-top:20px;
+color:#555;
+}
+
+</style></head><body><div class="card"><h1>Hi Arishfa</h1><div class="heart">❤️</div><p>
+I don't know if you're busy, upset, or just taking some time,
+and that's completely okay.
+</p><p>
+I just wanted to say that I hope you're doing well today.
+And if you're having a tough day, I hope something small
+makes you smile.
+</p><button onclick="showMessage()">Click if you need a tiny smile</button>
+
+<p id="message" class="hidden">
+Just a reminder: you're genuinely special and the world
+is a little better because you're in it. 🌸
+</p></div><script>
+
+function showMessage(){
+document.getElementById("message").style.display="block";
+}
+
+</script></body>
+</html>
