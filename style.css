@@ -28,18 +28,16 @@ h1 {
   font-weight: 500;
 }
 
-/* HINT */
-#hint {
-  margin-top: 8px;
-  font-size: 0.9rem;
-  color: #aaa;
+/* INPUT GROUP */
+.input-group {
+  position: relative;
+  margin-top: 20px;
 }
 
 /* INPUT */
 input {
   width: 100%;
   padding: 18px;
-  margin-top: 20px;
   border-radius: 14px;
   border: 1px solid #333;
   background: #120a0f;
@@ -54,14 +52,27 @@ input:focus {
   box-shadow: 0 0 20px rgba(255,107,129,0.2);
 }
 
-/* INLINE FEEDBACK (KEY FIX) */
+/* INLINE FEEDBACK (FIXED POSITION) */
 #inlineFeedback {
-  margin-top: 12px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  margin-top: 8px;
+
   font-size: 0.9rem;
   color: #ff9aa2;
   opacity: 0;
   transition: 0.3s;
-  min-height: 20px;
+
+  text-align: center;
+}
+
+/* HINT */
+#hint {
+  margin-top: 35px;
+  font-size: 0.9rem;
+  color: #aaa;
 }
 
 /* CARDS */
