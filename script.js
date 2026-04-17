@@ -3,13 +3,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const cards = document.getElementById("cards");
   const feedback = document.getElementById("feedback");
   const title = document.getElementById("title");
+  const hint = document.getElementById("hint");
 
-  let step = 1;
-  let tempWish = "";
+  let wishesLeft = 3;
 
-  // Load saved wishes
-  const saved = JSON.parse(localStorage.getItem("wishes")) || [];
-  saved.forEach(addCard);
+  const cuteResponses = [
+    "That sounds like something you truly deserve… 💫",
+    "I can already imagine you smiling when this happens… 💖",
+    "Noted… this one feels special. 🌙"
+  ];
 
   function addCard(text) {
     const div = document.createElement("div");
@@ -18,56 +20,45 @@ document.addEventListener("DOMContentLoaded", () => {
     cards.prepend(div);
   }
 
-  // Subtle UI feedback
-  input.addEventListener("focus", () => {
-    title.style.opacity = "0.6";
-  });
+  function showFeedback(text) {
+    feedback.innerText = text;
+    feedback.style.opacity = "1";
 
-  input.addEventListener("blur", () => {
-    title.style.opacity = "1";
-  });
+    setTimeout(() => {
+      feedback.style.opacity = "0";
+    }, 2000);
+  }
 
-  input.addEventListener("keypress", async (e) => {
-    if (e.key === "Enter" && input.value.trim()) {
+  input.addEventListener("keypress", (e) => {
+    if (e.key === "Enter" && input.value.trim() && wishesLeft > 0) {
 
-      const value = input.value.trim();
+      const wish = input.value.trim();
+      input.value = "";
 
-      if (step === 1) {
-        tempWish = value;
-        title.innerText = "Why does that matter to you?";
-        input.value = "";
-        step = 2;
+      addCard(wish);
 
+      wishesLeft--;
+
+      // Show cute message
+      showFeedback(cuteResponses[2 - wishesLeft]);
+
+      // Update hint
+      if (wishesLeft > 1) {
+        hint.innerText = `${wishesLeft} wishes remaining`;
+      } else if (wishesLeft === 1) {
+        hint.innerText = "1 wish remaining… choose wisely";
       } else {
-        const reason = value;
+        hint.innerText = "";
+      }
 
-        // Save locally
-        const stored = JSON.parse(localStorage.getItem("wishes")) || [];
-        stored.push(tempWish);
-        localStorage.setItem("wishes", JSON.stringify(stored));
+      // Final state
+      if (wishesLeft === 0) {
+        title.innerText = "We’ve received your wishes… ❤️";
+        input.style.display = "none";
 
-        addCard(tempWish);
-
-        // Send to Formspree
-        fetch("https://formspree.io/f/xykbwayy", {
-          method: "POST",
-          headers: { "Accept": "application/json" },
-          body: new FormData(Object.assign(document.createElement("form"), {
-            innerHTML: `
-              <input name="wish" value="${tempWish}">
-              <input name="reason" value="${reason}">
-            `
-          }))
-        });
-
-        // Feedback
-        feedback.style.opacity = "1";
-        setTimeout(() => feedback.style.opacity = "0", 1500);
-
-        // Reset loop
-        input.value = "";
-        title.innerText = "Tell me another.";
-        step = 1;
+        setTimeout(() => {
+          showFeedback("We’ll surprise you on your birthday with something your heart truly craves. 🎁");
+        }, 1000);
       }
     }
   });
