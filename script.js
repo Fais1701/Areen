@@ -19,7 +19,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  updateHint();
+  function isValidWish(text) {
+    return text.length > 3 && /[a-zA-Z]/.test(text);
+  }
 
   function addCard(text) {
     const div = document.createElement("div");
@@ -28,48 +30,78 @@ document.addEventListener("DOMContentLoaded", () => {
     cards.prepend(div);
   }
 
-  function showFeedback(text) {
-    feedback.innerText = text;
+  // ✨ Typing effect
+  function typeText(text) {
+    feedback.innerText = "";
     feedback.style.opacity = "1";
 
-    input.scrollIntoView({ behavior: "smooth", block: "center" });
+    let i = 0;
+
+    function typing() {
+      if (i < text.length) {
+        feedback.innerText += text.charAt(i);
+        i++;
+        setTimeout(typing, 20);
+      }
+    }
+
+    typing();
 
     setTimeout(() => {
       feedback.style.opacity = "0";
-    }, 2200);
+    }, 3000);
   }
 
   function generateResponse(wish, reason) {
-    return `${wish}… the way you said "${reason}" — yeah, I’m definitely not forgetting this one 💭`;
+    return `${wish}… the way you said "${reason}" — yeah, that felt real 💭`;
   }
+
+  updateHint();
 
   input.addEventListener("keypress", async (e) => {
     if (e.key === "Enter" && input.value.trim() && wishesLeft > 0) {
 
       const value = input.value.trim();
+
+      // ❌ Reject weak input
+      if (!isValidWish(value)) {
+        typeText("Come on… tell me something real 💭");
+        input.value = "";
+        return;
+      }
+
       input.value = "";
 
-      // STEP 1: Wish
+      // STEP 1 → Wish
       if (step === 1) {
         currentWish = value;
+
         title.innerText = "Why does this matter to you?";
         input.placeholder = "Tell me why…";
+
+        // slight pause (human feel)
+        setTimeout(() => {
+          typeText("Hmm… interesting.");
+        }, 300);
+
         step = 2;
       }
 
-      // STEP 2: Reason
+      // STEP 2 → Reason
       else {
         const reason = value;
 
         addCard(currentWish);
-
         wishesLeft--;
-
-        showFeedback(generateResponse(currentWish, reason));
 
         updateHint();
 
-        // Send to Formspree
+        // simulate thinking delay
+        setTimeout(() => {
+          typeText(generateResponse(currentWish, reason));
+        }, 500);
+
+        // Send to backend
         fetch("https://formspree.io/f/xykbwayy", {
           method: "POST",
           headers: { "Accept": "application/json" },
@@ -92,7 +124,7 @@ document.addEventListener("DOMContentLoaded", () => {
           input.style.display = "none";
 
           setTimeout(() => {
-            showFeedback("We’ll surprise you on your birthday with something your heart truly craves 🎁");
+            typeText("I’ll make sure your birthday feels exactly like you imagined 🎁");
           }, 1000);
         }
       }
