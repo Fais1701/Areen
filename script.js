@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let wishesLeft = 3;
 
+  // Update remaining wishes text
   function updateHint() {
     if (wishesLeft > 1) {
       hint.innerText = `${wishesLeft} wishes remaining`;
@@ -19,6 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   updateHint();
 
+  // Add card to UI
   function addCard(text) {
     const div = document.createElement("div");
     div.className = "card";
@@ -26,6 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
     cards.prepend(div);
   }
 
+  // Show feedback message
   function showFeedback(text) {
     feedback.innerText = text;
     feedback.style.opacity = "1";
@@ -35,34 +38,51 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 2000);
   }
 
-  function generateCuteResponse(wish, index) {
+  // 🔥 Smart personalized responses
+  function generateCuteResponse(wish) {
     const w = wish.toLowerCase();
 
+    if (w.includes("watch")) {
+      return "A watch… I can already picture you checking the time just to smile thinking of me ⌚💫";
+    }
+
+    if (w.includes("phone")) {
+      return "A new phone? I guess I’ll have to make sure I’m your favorite notification 📱❤️";
+    }
+
+    if (w.includes("dress")) {
+      return "A dress… yeah, I already know you’d look unreal in it ✨";
+    }
+
+    if (w.includes("shoes")) {
+      return "Shoes? Looks like someone’s planning to walk straight into my attention 👀";
+    }
+
     if (w.includes("food") || w.includes("pizza") || w.includes("burger")) {
-      return "Noted… I can already picture us enjoying that together 🍽️";
+      return "Food? I’m not letting you have that alone… I’m joining you 🍕❤️";
     }
 
     if (w.includes("trip") || w.includes("travel")) {
-      return "That sounds like a memory waiting to happen ✈️";
+      return "A trip… that sounds less like a plan and more like a memory waiting to happen ✈️";
     }
 
-    if (w.includes("dress") || w.includes("outfit")) {
-      return "You’d look unreal in that… not even kidding 💫";
+    if (w.includes("perfume")) {
+      return "Perfume… dangerous. I won’t survive if you smell that good 💫";
     }
 
-    if (w.includes("love") || w.includes("you")) {
+    if (w.includes("bag")) {
+      return "A bag… so you can carry everything except how much I like you 🖤";
+    }
+
+    if (w.includes("you") || w.includes("me")) {
       return "You already have more of me than you realise ❤️";
     }
 
-    const generic = [
-      "That one feels important… I’m remembering it 💭",
-      "You didn’t just say that randomly… I can tell 💖",
-      "Okay… this one stays with me 🌙"
-    ];
-
-    return generic[index % generic.length];
+    // fallback (still personalized)
+    return `${wish}… yeah, that’s not random. I’m remembering this one 💭`;
   }
 
+  // Handle input
   input.addEventListener("keypress", async (e) => {
     if (e.key === "Enter" && input.value.trim() && wishesLeft > 0) {
 
@@ -73,7 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       wishesLeft--;
 
-      showFeedback(generateCuteResponse(wish, 3 - wishesLeft));
+      showFeedback(generateCuteResponse(wish));
 
       updateHint();
 
@@ -88,14 +108,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }))
       });
 
+      // Final state
       if (wishesLeft === 0) {
-        title.innerText = "I think I know exactly what to do now… ❤️";
-        input.style.display = "none";
-
-        setTimeout(() => {
-          showFeedback("We’ll surprise you on your birthday with something your heart truly craves 🎁");
-        }, 1000);
-      }
-    }
-  });
-});
+        title.innerText = "I
