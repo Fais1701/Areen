@@ -6,8 +6,8 @@
 }
 
 body {
-  background: black;
-  color: white;
+  background: radial-gradient(circle at top, #1a0d14, #000);
+  color: #fff;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -24,31 +24,34 @@ body {
 /* TITLE */
 h1 {
   font-size: 1.8rem;
-  margin-bottom: 30px;
+  margin-bottom: 15px;
   font-weight: 500;
-  opacity: 0.9;
-  transition: 0.4s;
+}
+
+/* HINT */
+#hint {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: #aaa;
 }
 
 /* INPUT */
 input {
   width: 100%;
   padding: 18px;
+  margin-top: 20px;
   border-radius: 14px;
   border: 1px solid #333;
-  background: #111;
+  background: #120a0f;
   color: white;
-  font-size: 1rem;
   text-align: center;
   transition: 0.3s;
-  animation: breathe 3s infinite ease-in-out;
 }
 
 input:focus {
   outline: none;
-  border-color: #888;
-  box-shadow: 0 0 20px rgba(255,255,255,0.05);
-  animation: none;
+  border-color: #ff6b81;
+  box-shadow: 0 0 20px rgba(255,107,129,0.2);
 }
 
 /* CARDS */
@@ -60,7 +63,7 @@ input:focus {
 }
 
 .card {
-  background: #111;
+  background: rgba(255,255,255,0.05);
   padding: 14px;
   border-radius: 12px;
   animation: fadeUp 0.4s ease;
@@ -72,19 +75,14 @@ input:focus {
   bottom: 40px;
   width: 100%;
   text-align: center;
-  font-size: 0.9rem;
-  color: #aaa;
+  font-size: 0.95rem;
+  color: #ff9aa2;
   opacity: 0;
-  transition: 0.3s;
+  transition: 0.4s;
 }
 
-/* ANIMATIONS */
+/* ANIMATION */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes breathe {
-  0%, 100% { box-shadow: 0 0 0 rgba(255,255,255,0); }
-  50% { box-shadow: 0 0 25px rgba(255,255,255,0.08); }
 }
