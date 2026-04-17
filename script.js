@@ -32,6 +32,8 @@ document.addEventListener("DOMContentLoaded", () => {
     feedback.innerText = text;
     feedback.style.opacity = "1";
 
+    input.scrollIntoView({ behavior: "smooth", block: "center" });
+
     setTimeout(() => {
       feedback.style.opacity = "0";
     }, 2200);
@@ -47,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const value = input.value.trim();
       input.value = "";
 
-      // STEP 1 → capture wish
+      // STEP 1: Wish
       if (step === 1) {
         currentWish = value;
         title.innerText = "Why does this matter to you?";
@@ -55,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
         step = 2;
       }
 
-      // STEP 2 → capture reason
+      // STEP 2: Reason
       else {
         const reason = value;
 
@@ -79,7 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
           }))
         });
 
-        // Reset flow
+        // Reset
         step = 1;
         input.placeholder = "Tell me something you want…";
         title.innerText = "Tell me another.";
